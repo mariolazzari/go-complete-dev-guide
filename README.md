@@ -35,3 +35,49 @@ go run main.go
 ## Deeper into Go
 
 ### Project overview
+
+### New project folder
+
+```sh
+mkdir cards
+cd cards
+touch main.go
+```
+
+### Variables declaration
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	// var card string = "Ace of Spades"
+	card := "Ace of Spades"
+	card = "Five of diamonds"
+	fmt.Println(card)
+}
+```
+
+### Function return type
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	card := newCard()
+	fmt.Println(card)
+}
+
+func newCard() string {
+	return "Five of Hearts"
+}
+```
+
+### Slices and loops
+
+```go
+
+```
