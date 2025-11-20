@@ -28,3 +28,10 @@ go run main.go
 - reusable: package name
 
 ### Import statement
+
+[Go package](https://pkg.go.dev/)
+[fmt](https://pkg.go.dev/fmt)
+
+## Deeper into Go
+
+### Project overview
