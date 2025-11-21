@@ -102,3 +102,73 @@ func newCard() string {
 ```
 
 ### OOP vs Go
+
+- custom types
+- receiver function
+
+### Custom types
+
+```go
+package main
+
+func main() {
+	d := deck{"Ace of diamonds", newCard()}
+	d = append(d, "Six of spades")
+	d.Print()
+}
+
+func newCard() string {
+	return "Five of Hearts"
+}
+```
+
+### Receiver function
+
+```go
+package main
+
+func main() {
+	d := deck{"Ace of diamonds", newCard()}
+	d = append(d, "Six of spades")
+	d.Print()
+}
+
+func newCard() string {
+	return "Five of Hearts"
+}
+```
+
+### Deck creation
+
+```go
+package main
+
+import "fmt"
+
+type deck []string
+
+func newDeck() deck {
+	cards := deck{}
+	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
+	cardValues := []string{"Ace", "Two", "Three", "Four"}
+
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
+			cards = append(cards, value+" of "+suit)
+		}
+	}
+	return cards
+}
+
+func (d deck) print() {
+	for i, card := range d {
+		fmt.Println(i, card)
+	}
+}
+```
+
+### Slice range
+
+```go
+
+```
