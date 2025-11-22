@@ -169,6 +169,10 @@ func (d deck) print() {
 
 ### Slice range
 
-```go
+### Multiple return values
 
+```go
+func deal(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
 ```
