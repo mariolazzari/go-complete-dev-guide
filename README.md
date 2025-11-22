@@ -176,3 +176,41 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 ```
+
+### Byte slices
+
+[io](https://pkg.go.dev/io)
+[os](https://pkg.go.dev/os)
+
+[]byte -> asci code array
+
+### Deck to string
+
+```go
+func (d deck) toString() string {
+	return ""
+}
+```
+
+### Joining slices
+
+[strings](https://pkg.go.dev/strings)
+[join](https://pkg.go.dev/strings#Join)
+
+```go
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
+}
+```
+
+### Save data to file
+
+[WriteFile](https://pkg.go.dev/os#example-WriteFile)
+
+```go
+func (d deck) saveToFile(filename string) error {
+	return os.WriteFile(filename, []byte(d.toString()), 0666)
+}
+```
+
+### Reading from file
