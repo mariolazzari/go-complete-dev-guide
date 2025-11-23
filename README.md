@@ -214,3 +214,116 @@ func (d deck) saveToFile(filename string) error {
 ```
 
 ### Reading from file
+
+[ReadFile](https://pkg.go.dev/os#example-ReadFile)
+
+```go
+func newDeckFromFile(filename string) deck {
+	bs, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error reading file", err)
+		os.Exit(1)
+	}
+	// ...
+}
+```
+
+### Error handling
+
+[split](https://pkg.go.dev/strings#Split)
+
+```go
+func newDeckFromFile(filename string) deck {
+	bs, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error reading file", err)
+		os.Exit(1)
+	}
+
+	s := strings.Split(string(bs), ",")
+
+	return deck(s)
+}
+```
+
+### Shuffling cards
+
+[rand](https://pkg.go.dev/math/rand)
+
+```go
+func (d deck) shuffle() {
+	for i := range d {
+		newPos := rand.Intn(len(d) - 1)
+		d[i], d[newPos] = d[newPos], d[i]
+	}
+}
+```
+
+### Random number generation
+
+```go
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		newPos := r.Intn(len(d) - 1)
+		d[i], d[newPos] = d[newPos], d[i]
+	}
+}
+```
+
+### Creating go.mod
+
+```sh
+go mod init cards
+```
+
+### Testing in Go
+
+```go
+go test
+```
+
+### Writing tests in Go
+
+```go
+package main
+
+import "testing"
+
+func TestNewDeck(t *testing.T) {
+	d := newDeck()
+	if len(d) != 16 {
+		t.Errorf("Expected deck length of 16, but got %v", len(d))
+	}
+
+}
+```
+
+### Asserting elements in a slice
+
+```go
+package main
+
+import "testing"
+
+func TestNewDeck(t *testing.T) {
+	d := newDeck()
+	if len(d) != 16 {
+		t.Errorf("Expected deck length of 16, but got %v", len(d))
+	}
+	if d[0] != "Ace of Spades" {
+		t.Errorf("Expected Ace of spades, but got %v", d[0])
+	}
+	if d[len(d)-1] != "Four of Clubs" {
+		t.Errorf("Expected Four of Clubs, but got %v", d[0])
+	}
+}
+```
+
+### Testing file IO
+
+```go
+
+```
