@@ -560,3 +560,84 @@ func (p *person) updateName(name string) {
 | string      | channels        |
 | bool        | pointers        |
 | structs     | functions       |
+
+## Maps
+
+### What is a map
+
+A collaction of key/value pairs
+
+### Manipulating maps
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	colors := map[string]string{
+		"red":   "#ff0000",
+		"green": "#4bf745",
+		"white": "#ffffff",
+	}
+	fmt.Println(colors)
+
+	colors2 := make(map[string]string)
+	colors2["black"] = "#000000"
+	colors2["yellow"] = "#ffff00"
+	fmt.Println(colors2)
+
+	delete(colors2, "black")
+}
+```
+
+### Iterating maps
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	colors := map[string]string{
+		"red":   "#ff0000",
+		"green": "#4bf745",
+		"white": "#ffffff",
+	}
+	fmt.Println(colors)
+
+	colors2 := make(map[string]string)
+	colors2["black"] = "#000000"
+	colors2["yellow"] = "#ffff00"
+	fmt.Println(colors2)
+
+	delete(colors2, "black")
+
+	for k, v := range colors {
+		fmt.Printf("Key: %s Value: %s\n", k, v)
+	}
+	printMap(colors)
+
+}
+
+func printMap(c map[string]string) {
+	for c, hex := range c {
+		fmt.Printf("Color: %s Hex: %s\n", c, hex)
+	}
+}
+```
+
+### Maps vs structs
+
+#### Maps
+
+- all keys of same type
+- all values of same type
+- keys are indexed
+- reference type
+
+#### Structs
+
+- values can be of different types
+- keys not indexed
+- value type
