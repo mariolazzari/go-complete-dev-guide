@@ -361,3 +361,45 @@ func main() {
 	}
 }
 ```
+
+## Structs
+
+### Structs in Go
+
+Collection of related properties
+
+### Struct definition
+
+```go
+package main
+
+type person struct {
+	firstName string
+	lastName  string
+}
+
+func main() {
+
+}
+```
+
+### Struct declaration
+
+```go
+package main
+
+import "fmt"
+
+type person struct {
+	firstName string
+	lastName  string
+}
+
+func main() {
+	mario := person{"Mario", "Lazzari"}
+	fmt.Println(mario)
+	maria := person{firstName: "Maria", lastName: "Lazzari"}
+	fmt.Println(maria)
+
+}
+```
