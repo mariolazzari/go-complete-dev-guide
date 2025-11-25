@@ -641,3 +641,84 @@ func printMap(c map[string]string) {
 - values can be of different types
 - keys not indexed
 - value type
+
+## Interfaces
+
+### Without interfaces
+
+```go
+package main
+
+import "fmt"
+
+type englishBot struct{}
+
+type spanishBot struct{}
+
+func main() {
+	eb := englishBot{}
+	sb := spanishBot{}
+
+	eb.printGreeting()
+	sb.printGreeting()
+}
+
+func (englishBot) getGreeting() string {
+	// custom logic
+	return "Hi there"
+}
+
+func (spanishBot) getGreeting() string {
+	// custom logic
+	return "Hola"
+}
+
+func (eb englishBot) printGreeting() {
+	fmt.Println(eb.getGreeting())
+}
+
+func (sb spanishBot) printGreeting() {
+	fmt.Println(sb.getGreeting())
+}
+```
+
+### Interfaces in practices
+
+```go
+package main
+
+import "fmt"
+
+type bot interface {
+	getGreeting() string
+}
+
+type englishBot struct{}
+
+type spanishBot struct{}
+
+func main() {
+	eb := englishBot{}
+	sb := spanishBot{}
+
+	printGreeting(eb)
+	printGreeting(sb)
+
+}
+
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
+}
+
+func (englishBot) getGreeting() string {
+	// custom logic
+	return "Hi there"
+}
+
+func (spanishBot) getGreeting() string {
+	// custom logic
+	return "Hola"
+}
+```
+
+### Rules on interfaces
