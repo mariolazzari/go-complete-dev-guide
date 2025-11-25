@@ -722,3 +722,38 @@ func (spanishBot) getGreeting() string {
 ```
 
 ### Rules on interfaces
+
+- [The bigger the interface, the weaker the abstraction](https://www.youtube.com/watch?v=PAAkCSZUG1c&t=5m17s)
+- [interface{} says nothing](https://www.youtube.com/watch?v=PAAkCSZUG1c&t=456s)
+
+### Interface notes
+
+- not generic type
+- implicit
+- contract
+- understand how to read stdlib docs
+
+### http package
+
+[http](https://pkg.go.dev/net/http)
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func main() {
+	resp, err := http.Get("http://google.com")
+	if err != nil {
+		fmt.Println("Error getting google.com", err)
+		os.Exit(1)
+	}
+	fmt.Println(resp)
+}
+```
+
+### Reading docs
