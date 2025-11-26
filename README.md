@@ -855,7 +855,92 @@ func checkLink(link string) {
 }
 ```
 
+```sh
+time go run main.go
+https://google.com is up
+https://yahoo.com is up
+https://bing.com is up
+https://mariolazzari.it is up
+go run main.go  0.65s user 0.57s system 39% cpu 3.077 total
+```
+
 ### Goroutines
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	links := []string{
+		"https://google.com",
+		"https://yahoo.com",
+		"https://bing.com",
+		"https://mariolazzari.it",
+	}
+
+	for _, link := range links {
+		// run function in a new goroutine
+		go checkLink(link)
+	}
+}
+
+func checkLink(link string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		return
+	}
+	fmt.Printf("%s is up\n", link)
+}
+```
+
+### Channels
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	links := []string{
+		"https://google.com",
+		"https://yahoo.com",
+		"https://bing.com",
+		"https://mariolazzari.it",
+	}
+
+	ch := make(chan string)
+
+	for _, link := range links {
+		// run function in a new goroutine
+		go checkLink(link, ch)
+	}
+
+	fmt.Println(<-ch)
+}
+
+func checkLink(link string, ch chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		ch <- "down"
+		return
+	}
+
+	ch <- "up"
+	fmt.Printf("%s is up\n", link)
+
+}
+```
+
+### Blocking channel
 
 ```go
 
