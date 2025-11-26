@@ -16,22 +16,21 @@ func main() {
 	ch := make(chan string)
 
 	for _, link := range links {
-		// run function in a new goroutine
 		go checkLink(link, ch)
 	}
 
-	fmt.Println(<-ch)
+	for l := range ch {
+		go checkLink(l, ch)
+	}
 }
 
 func checkLink(link string, ch chan string) {
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Printf("%s is down\n", link)
-		ch <- "down"
+		ch <- link
 		return
 	}
 
-	ch <- "up"
-	fmt.Printf("%s is up\n", link)
-
+	ch <- link
 }

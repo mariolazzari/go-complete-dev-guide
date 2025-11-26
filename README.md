@@ -937,11 +937,150 @@ func checkLink(link string, ch chan string) {
 	ch <- "up"
 	fmt.Printf("%s is up\n", link)
 
+	ch <- "up"
+	ch <- "up"
+	ch <- "up"
+	ch <- "up"
 }
 ```
 
 ### Blocking channel
 
 ```go
+func checkLink(link string, ch chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		ch <- "down"
+		return
+	}
 
+	ch <- "up"
+	fmt.Printf("%s is up\n", link)
+}
+```
+
+### Receiving messages
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	links := []string{
+		"https://google.com",
+		"https://yahoo.com",
+		"https://bing.com",
+		"https://mariolazzari.it",
+	}
+
+	ch := make(chan string)
+
+	for _, link := range links {
+		// run function in a new goroutine
+		go checkLink(link, ch)
+	}
+
+	for range links {
+		fmt.Println(<-ch)
+	}
+}
+
+func checkLink(link string, ch chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		ch <- "down"
+		return
+	}
+
+	ch <- "up"
+	fmt.Printf("%s\n", link)
+}
+```
+
+### Repeating routines
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	links := []string{
+		"https://google.com",
+		"https://yahoo.com",
+		"https://bing.com",
+		"https://mariolazzari.it",
+	}
+
+	ch := make(chan string)
+
+	for _, link := range links {
+		go checkLink(link, ch)
+	}
+
+	for {
+		go checkLink(<-ch, ch)
+	}
+}
+
+func checkLink(link string, ch chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		ch <- link
+		return
+	}
+
+	ch <- link
+}
+```
+
+### Alternative loop syntax
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	links := []string{
+		"https://google.com",
+		"https://yahoo.com",
+		"https://bing.com",
+		"https://mariolazzari.it",
+	}
+
+	ch := make(chan string)
+
+	for _, link := range links {
+		go checkLink(link, ch)
+	}
+
+	for l := range ch {
+		go checkLink(l, ch)
+	}
+}
+
+func checkLink(link string, ch chan string) {
+	_, err := http.Get(link)
+	if err != nil {
+		fmt.Printf("%s is down\n", link)
+		ch <- link
+		return
+	}
+
+	ch <- link
+}
 ```
