@@ -752,8 +752,78 @@ func main() {
 		fmt.Println("Error getting google.com", err)
 		os.Exit(1)
 	}
-	fmt.Println(resp)
+
+
+fmt.Println(resp)
+
 }
 ```
 
-### Reading docs
+### Shape challenge
+
+```go
+package main
+
+import "fmt"
+
+type shape interface {
+	getArea() float64
+}
+
+type triangle struct {
+	b float64
+	h float64
+}
+
+type square struct {
+	l float64
+}
+
+func main() {
+	s := square{2}
+	t := triangle{2, 3}
+
+	printArea(&s)
+	printArea(&t)
+}
+
+func printArea(s shape) {
+	fmt.Println("Area:", s.getArea())
+}
+
+func (t *triangle) getArea() float64 {
+	return t.b * t.h / 2
+}
+
+func (s *square) getArea() float64 {
+	return s.l * s.l
+}
+```
+
+### Challenge hard mode
+
+```go
+package main
+
+import (
+	"io"
+	"log"
+	"os"
+)
+
+func main() {
+	file, err := os.Open(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	io.Copy(os.Stdout, file)
+}
+```
+
+## Channels
+
+### Website checker
+
+```go
+
+```
