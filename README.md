@@ -1176,7 +1176,3 @@ func checkLink(link string, ch chan string) {
 	ch <- link
 }
 ```
-
-### Channels gotchas
-
--
